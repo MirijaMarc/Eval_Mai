@@ -1,0 +1,74 @@
+Formulaire:
+
+<form action="#" method="#" class="row g-3">
+    <div class="col-12">
+        <label class="form-label">#</label>
+        <input type="text" class="form-control" name="#">
+    </div>
+    <div class="col-12">
+        <label class="form-label">#</label>
+        <input type="date" class="form-control" name="#">
+    </div>
+
+    <div class="col-12">
+        <label class="form-label">#</label>
+        <select class="form-select" name="#">
+            <option th:each=" element : ${#}" th:value="${#.id}" th:text="${#.nom}"></option>
+        </select>
+    </div>
+
+    <div class="text-center">
+    <button type="submit" class="btn btn-primary">Insérer</button>
+    <button type="reset" class="btn btn-secondary">Reset</button>
+    </div>
+</form>
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Modal:
+<div class="modal fade" th:id = "'#-' + ${#.id}" tabindex="-1">
+    <form action="#" method="post" class="row g-3">
+        <input type="hidden" th:value = "${#.id}" name="id">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" th:text="'Modification du ecurie N° ' + ${element.id}"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">  
+                    <div class="col-12">
+                        <label class="form-label">#</label>
+                        <input type="text" class="form-control" th:value="${#.nom}" name="#">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning">Modifier</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Controlle de valeur String:
+    public void setNom(String n)throws Exception{
+        if (n == null){
+            System.out.println("Null izy ato");
+            throw new Exception("Nom pilote invalide"); 
+        }else{
+            if (n.trim() == "") throw new Exception("Nom pilote invalide");
+            nom = n;
+        }
+    }
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Redirect erreur:
+    mv.addObject("error", e.getMessage());
+    return mv;
+
+
+
+
+

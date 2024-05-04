@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html 
+    layout:decorate="~{layouts/layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erreur CSV</title>
+</head>
+<body>
+    <main id="main" class="main" layout:fragment="main">
+        <h5 class="card-title">Erreurs CSV</h5>
+        <table class="table">
+          <thead>
+            <tr>
+                <th>Ligne</th>
+                <th>Erreurs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:class="${element.ligne %2 == 0} ? 'table-danger' : 'table-primary'" th:each=" element : ${erreurs}" th:if="${element.erreur != ''}">
+                <td th:text="${element.ligne}"></td>
+                <td th:text="${element.erreur}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </main><!-- End #main -->
+</body>
+</html>
