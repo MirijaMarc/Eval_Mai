@@ -58,5 +58,14 @@ CREATE TABLE grand_prix_pilotes (
   CHECK (etat_grand_prix_pilote = 0 OR etat_grand_prix_pilote=-10)
 );
 
+CREATE TABLE users(
+  id_user SERIAL PRIMARY KEY,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  role INTEGER DEFAULT 1 NOT NULL,
+  etat_user INT DEFAULT 0 NOT NULL,
+  CHECK (etat_user = 0 OR etat_user = 10)
+);
+
 
 

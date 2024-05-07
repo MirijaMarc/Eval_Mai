@@ -199,6 +199,10 @@ VALUES
 
 
 
+INSERT INTO users (email, password, role) VALUES ('mimi@gmail.com', 'mirija', 1);
+
+
+
 INSERT into pilotes (nom_pilote, date_naissance) FROM 
 SELECT nom , CAST(datenaissance as DATE) FROM csv
 GROUP BY nom, datenaissance;

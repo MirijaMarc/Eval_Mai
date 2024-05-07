@@ -32,26 +32,6 @@ public class Pilote {
     @Column(name="etat_pilote")
     private int etat;
 
-    public void setNom(String n)throws Exception{
-        if (n == null){
-            System.out.println("Null izy ato");
-            throw new Exception("Nom pilote invalide"); 
-        }else{
-            if (n.trim() == "") throw new Exception("Nom pilote invalide");
-            nom = n;
-        }
-    }
-
-
-    public static void insertPilotesCsv(EntityManager entityManager){
-        entityManager.createNativeQuery("""
-            INSERT into pilotes (nom_pilote, date_naissance) 
-            SELECT nom , CAST(datenaissance as DATE) FROM csv
-            GROUP BY nom, datenaissance
-                """).executeUpdate();
-    }
-
-
 
 
 }

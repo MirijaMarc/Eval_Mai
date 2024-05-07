@@ -28,8 +28,8 @@
 
 
                       <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Insérer</button>
-                        <button type="reset" class="btn btn-secondary">Reset</button>
+                        <button type="submit" class="btn btn-outline-primary">Insérer</button>
+                        <button type="reset" class="btn btn-outline-secondary">Reset</button>
                       </div>
                     </form>
       
@@ -39,14 +39,18 @@
               </div>
             </div>
 
-            <button type="button" class="exportBtn btn btn-light mt-3 mb-3" >Export PDF</button>
+            <div class="d-flex my-3" style="gap: 21px;">
+              <a href="/pilotes/export-pdf" type="button" class="btn btn-outline-primary" >Export PDF</a>
+              <a href="/pilotes/export-csv" type="button" class="btn btn-outline-info" >Export CSV</a>
+              <a href="/pilotes/export-excel" type="button" class="btn btn-outline-success" >Export Excel</a>
+            </div>
             <div class="row">
               <div class="col-lg-12">
       
                 <div id="elementPDF" class="card">
                   <div class="card-body">
                     <h5 class="card-title">Liste Pilotes</h5>
-                    <table class="table">
+                    <table class="table table-hover">
                       <thead>
                         <tr>
 <th>id</th>
@@ -56,7 +60,7 @@
 <th>date</th>
 
 
-
+<th>Actions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -65,13 +69,13 @@
 
 <td th:text="${element.nom}"></td>
 
-<td th:text="${element.date}"></td>
+<td class="colDate" th:text="${element.date}"></td>
 
 
 
                           <td>
-                            <a data-bs-toggle="modal" th:data-bs-target= "'#modifier-' + ${element.id}" type="button" class="btn btn-primary btn-sm">Modifier</a>
-                            <a data-bs-toggle="modal" th:data-bs-target= "'#supprimer-' + ${element.id}" type="button" class="btn btn-danger btn-sm">Supprimer</a>                            
+                            <a data-bs-toggle="modal" th:data-bs-target= "'#modifier-' + ${element.id}" type="button" class="btn btn-outline-primary btn-sm">Modifier</a>
+                            <a data-bs-toggle="modal" th:data-bs-target= "'#supprimer-' + ${element.id}" type="button" class="btn btn btn-outline-danger btn-sm">Supprimer</a>                            
                           </td>
                         <div class="modal fade" th:id = "'modifier-' + ${element.id}" tabindex="-1">
                           <form action="/pilotes/update" method="post" class="row g-3">
@@ -96,8 +100,8 @@
 
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                  <button type="submit" class="btn btn-warning">Modifier</button>
+                                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-outline-warning">Modifier</button>
                                 </div>
                               </div>
                             </div>
@@ -117,8 +121,8 @@
                                   Voulez vous vraiment Supprimer ?
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                  <button type="submit" class="btn btn-danger">Supprimer</button>
+                                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-outline-danger">Supprimer</button>
                                 </div>
                               </div>
                             </div>

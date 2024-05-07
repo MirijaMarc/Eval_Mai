@@ -7,7 +7,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Query;
 import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 
@@ -25,14 +28,6 @@ public class Grand_prix {
 
     @Column(name="etat_grand_prix")
     private int etat;
-
-
-    public static void insertGPCsv(EntityManager em){
-        em.createNativeQuery("""
-            INSERT INTO grand_prixs (nom_grand_prix)
-            SELECT DISTINCT grandprix from csv
-                """).executeUpdate();
-    }
 
 
 

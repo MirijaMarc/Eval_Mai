@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -28,13 +27,4 @@ public interface Grand_prixRepository extends JpaRepository<Grand_prix, Integer>
             UPDATE grand_prixs set etat_grand_prix= -10 where id_grand_prix= :id RETURNING *
             """)
     public Grand_prix delete(int id);
-
-
-
-    @Modifying
-    @Query(nativeQuery = true, value = """
-        INSERT INTO grand_prixs (nom_grand_prix)
-        SELECT DISTINCT grandprix from csv
-            """)
-    public void insertGPCsv();
 }

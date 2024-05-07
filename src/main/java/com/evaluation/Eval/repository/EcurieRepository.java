@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -28,14 +27,4 @@ public interface EcurieRepository extends JpaRepository<Ecurie, Integer> {
             UPDATE ecuries set etat_ecurie= -10 where id_ecurie= :id RETURNING *
             """)
     public Ecurie delete(int id);
-
-    
-    @Modifying
-    @Query(nativeQuery = true, value = """
-        INSERT into ecuries (nom_ecurie)  
-        SELECT ecurie FROM csv
-        GROUP BY ecurie        
-            """)
-    public void insertEcuriesCsv();
-
 }

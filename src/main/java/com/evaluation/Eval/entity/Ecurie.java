@@ -1,12 +1,16 @@
 package com.evaluation.Eval.entity;
 
+import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Query;
 import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 
@@ -25,23 +29,6 @@ public class Ecurie {
     @Column(name="etat_ecurie")
     private int etat;
 
-    public void setNom(String n)throws Exception{
-        if (n == null){
-            System.out.println("Null izy ato");
-            throw new Exception("Nom pilote invalide"); 
-        }else{
-            if (n.trim() == "") throw new Exception("Nom pilote invalide");
-            nom = n;
-        }
-    }
 
-    public static void insertEcuriesCsv(EntityManager em){
-        em.createNativeQuery("""
-            INSERT into ecuries (nom_ecurie)  
-            SELECT ecurie FROM csv
-            GROUP BY ecurie
-                """).executeUpdate();
-
-    }
 
 }

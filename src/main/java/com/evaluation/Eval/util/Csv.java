@@ -4,8 +4,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.sql.Time;
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -14,17 +12,13 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.evaluation.Eval.entity.Pilote;
 import com.evaluation.Eval.repository.CsvRepository;
 import com.opencsv.CSVReader;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Query;
-import jakarta.persistence.Table;
 import lombok.Data;
 
 

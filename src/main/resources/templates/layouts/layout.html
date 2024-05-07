@@ -44,7 +44,26 @@
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
 
+
     </div><!-- End Logo -->
+
+    
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="d-flex dropdown pe-3 align-items-center" style="gap: 25px;">
+
+          <span th:if="${isLoged == true}" class="badge bg-success" th:text="${role}"></span>
+          <a th:if="${isLoged == true}" class="btn btn-outline-danger d-flex align-items-center" href="/user/logout">
+            Se déconnecter
+          </a>
+          <a th:if="${isLoged == false}" class="btn btn-outline-primary d-flex align-items-center" href="/user/login">
+            Se connecter
+          </a>
+        </li>
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
 
   </header><!-- End Header -->
 
@@ -147,12 +166,14 @@
   <!-- Template Main JS File -->
   <script th:src="@{/js/main.js}"></script>
 
+  <!-- Js Mirija -->
+  <script th:src="@{/js/numeric.min.js}"></script>
+  <script th:src="@{/js/script.js}"></script>
+
 
   <!-- Html to pdf js -->
 
 
-  <script src="/vendor/html2pdf/html2pdf.buddle.min.js"></script>
-  <script src="/js/html2pdf.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <script th:if="${error}" th:inline="javascript">
         Toastify({

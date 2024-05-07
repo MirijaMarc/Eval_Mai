@@ -68,14 +68,15 @@ public class CSVController {
         ModelAndView mv = new ModelAndView("redirect:/pilotes");
         ArrayList<Erreur> erreurs = Csv.importer(csvRepository, file.getOriginalFilename());
         if (Csv.hasError(erreurs)){
-            mv.setViewName("pages/erreur");
+            mv.setViewName("errors/erreur");
             mv.addObject("erreurs", erreurs);
+            return mv;
         }
-        Ecurie.insertEcuriesCsv(entityManager);
-        Pilote.insertPilotesCsv(entityManager);
-        Ecurie_pilote.insetEcuriePiloteCsv(entityManager);
-        Grand_prix.insertGPCsv(entityManager);
-        Grand_prix_pilote.insertGrandPrixPilote(entityManager);
+        // Ecurie.insertEcuriesCsv(entityManager);
+        // Pilote.insertPilotesCsv(entityManager);
+        // Ecurie_pilote.insetEcuriePiloteCsv(entityManager);
+        // Grand_prix.insertGPCsv(entityManager);
+        // Grand_prix_pilote.insertGrandPrixPilote(entityManager);
     return mv;
     }
 }

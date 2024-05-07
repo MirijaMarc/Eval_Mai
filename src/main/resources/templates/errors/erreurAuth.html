@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/blankLayout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page non Autorisé</title>
+</head>
+<body>
+    <main layout:fragment="main">
+        <div class="container">
+    
+          <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+            <h1>403</h1>
+            <h2>Vous n'avez pas l'autorisation pour cette page</h2>
+            <a class="btn" href="#">Back to home</a>
+            <img th:src="@{/img/denied.png}" width="300px" height="360px" class="img-fluid py-5" alt="Page Not Found">
+          </section>
+    
+        </div>
+      </main><!-- End #main -->
+</body>
+</html>

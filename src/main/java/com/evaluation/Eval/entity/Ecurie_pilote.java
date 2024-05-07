@@ -35,14 +35,5 @@ public class Ecurie_pilote {
     private int etat;
 
 
-    public static void insetEcuriePiloteCsv(EntityManager em){
-        em.createNativeQuery("""
-            INSERT INTO ecurie_pilotes (idpilote, idecurie)
-            SELECT p.id_pilote, e.id_ecurie from csv c
-            JOIN pilotes p ON p.nom_pilote = c.nom AND p.date_naissance = CAST(c.datenaissance as date)
-            JOIN ecuries e ON e.nom_ecurie = c.ecurie
-            GROUP BY p.id_pilote, e.id_ecurie
-                """).executeUpdate();
-    }
 
 }

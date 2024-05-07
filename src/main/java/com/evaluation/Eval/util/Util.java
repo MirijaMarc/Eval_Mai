@@ -21,6 +21,7 @@ import com.opencsv.CSVReader;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.servlet.http.HttpServletRequest;
 
 
 public class Util {
@@ -28,6 +29,10 @@ public class Util {
     public static String CSV_PATH = "E:/Mirija/ITU/S6/evaluation/Eval/csv";
 
 
+
+    public static boolean isLoged(HttpServletRequest request){
+        return request.getSession().getAttribute("user") != null;
+    }
 
 
     public static void importer (EntityManager entityManager, String colonnes, String path){
