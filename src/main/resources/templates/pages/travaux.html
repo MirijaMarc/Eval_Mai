@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html
+    layout:decorate="~{layouts/layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}"></title>
+</head>
+<body>
+    <main id="main" class="main" layout:fragment="main">
+        <section class="section">
+            <!-- <div class="row">
+              <div class="col-lg-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Insertion</h5>
+                    <form action="/travauxs" method="post" class="row g-3">
+                      
+<div class="col-12">
+    <label class="form-label">Code_travaux</label>
+    <input type="text" class="form-control" name="code">
+</div>
+<div class="col-12">
+    <label class="form-label">Nom_travaux</label>
+    <input type="text" class="form-control" name="nom">
+</div>
+<div class="col-12">
+    <label class="form-label">unites</label>
+    <select class="form-select" name="unite">
+        <option th:each=" element : ${unites}" th:value="${element.id}" th:text="${element.nom}"></option>
+    </select>
+</div>
+<div class="col-12">
+    <label class="form-label">prix_unitaire</label>
+    <input type="number" class="form-control" name="prixUnitaire">
+</div>
+
+
+                      <div class="text-center">
+                        <button type="submit" class="btn btn-outline-primary">Insérer</button>
+                        <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                      </div>
+                    </form>
+      
+                  </div>
+                </div>
+      
+              </div>
+            </div> -->
+
+            <!-- <div class="d-flex my-3" style="gap: 21px;">
+              <a href="/travauxs/export-pdf" type="button" class="btn btn-outline-primary" >Export PDF</a>
+              <a href="/travauxs/export-csv" type="button" class="btn btn-outline-info" >Export CSV</a>
+              <a href="/travauxs/export-excel" type="button" class="btn btn-outline-success" >Export Excel</a>
+            </div> -->
+            <div class="row">
+              <div class="col-lg-12">
+      
+                <div id="elementPDF" class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Liste Travauxs</h5>
+                        <form action="/travauxs" method="get" class="mb-3">
+                            <div class="row align-items-center">
+                              <div class="col-2">
+                                <select class="form-select" name="sortBy">
+                                    <option value="id_travaux" th:selected="${ sortBy == 'id_travaux'}">id</option>
+
+<option value="idtype_travaux" th:selected="${ sortBy == 'idtype_travaux'}">type_travaux</option>
+
+<option value="code_travaux" th:selected="${ sortBy == 'code_travaux'}">code</option>
+
+<option value="nom_travaux" th:selected="${ sortBy == 'nom_travaux'}">nom</option>
+
+<option value="unite_travaux" th:selected="${ sortBy == 'unite_travaux'}">unite</option>
+
+<option value="prix_unitaire" th:selected="${ sortBy == 'prix_unitaire'}">prixUnitaire</option>
+
+
+
+                                </select>
+                              </div>
+                              <div class="form-check col-2" style="width: 6%;">
+                                <input class="form-check-input" type="radio" name="direction" value="asc" id="flexRadioDefault1" th:checked="${ direction == 'asc'}">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                  ASC
+                                </label>
+                              </div>
+                                <div class="form-check col-2" style="width: 6%;">
+                                  <input class="form-check-input" type="radio" name="direction" value="desc" id="flexRadioDefault2" th:checked="${ direction == 'desc'}">
+                                  <label class="form-check-label" for="flexRadioDefault2">
+                                    DESC
+                                  </label>
+                                </div>
+                              <div class="col">
+                                <button type="submit" class="btn btn-outline-primary">Trier</button>
+                              </div>
+                            </div>
+                        </form>
+                        <!-- <form action="/travauxs" method="get" class="mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-4">
+                              <input type="text" class="form-control" th:if="${search != null}" th:value="${search}" name="search" placeholder="rechercher">
+                              <input type="text" class="form-control" th:unless="${search != null}" name="search" placeholder="rechercher">
+                            </div>
+                            <div class="col">
+                              <button type="submit" class="btn btn-outline-primary">Search</button>
+                            </div>
+                          </div>
+                        </form> -->
+                    <div style="overflow-x:auto;">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>id</th>
+
+<th>code</th>
+
+<th>nom</th>
+
+<th>unite</th>
+
+<th>prixUnitaire</th>
+
+
+<th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each=" element : ${travauxs}">
+                          <td th:text="${element.id}"></td>
+
+<td th:text="${element.code}"></td>
+
+<td th:text="${element.nom}"></td>
+
+<td th:text="${element.unite.nom}"></td>
+
+<td th:text="${#numbers.formatDecimal(element.prixUnitaire, 1, 'COMMA', 2, 'POINT') + ' Ar'}"></td>
+
+
+
+                          <td>
+                            <a data-bs-toggle="modal" th:data-bs-target= "'#modifier-' + ${element.id}" type="button" class="btn btn-outline-primary btn-sm">Modifier</a>
+                            <!-- <a data-bs-toggle="modal" th:data-bs-target= "'#supprimer-' + ${element.id}" type="button" class="btn btn btn-outline-danger btn-sm">Supprimer</a>                             -->
+                          </td>
+                        <div class="modal fade" th:id = "'modifier-' + ${element.id}" tabindex="-1">
+                          <form action="/travauxs/update" method="post" class="row g-3">
+                            <input type="hidden" th:value = "${element.id}" name="id">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" th:text="'Modification du travaux N° ' + ${element.id}"></h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  
+<div class="col-12">
+    <label class="form-label">Code_travaux</label>
+    <input type="text" class="form-control" th:value="${element.code}" name="code">
+</div>
+<div class="col-12">
+    <label class="form-label">Nom_travaux</label>
+    <input type="text" class="form-control" th:value="${element.nom}" name="nom">
+</div>
+<div class="col-12">
+    <label class="form-label">unites</label>
+    <select class="form-select" name="unite">
+        <option th:each=" element : ${unites}" th:value="${element.id}" th:text="${element.nom}"></option>
+    </select>
+</div>
+<div class="col-12">
+    <label class="form-label">prix_unitaire</label>
+    <input type="text" class="form-control" th:value="${element.prixUnitaire}" name="prixUnitaire">
+</div>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-outline-warning">Modifier</button>
+                                </div>
+                              </div>
+                            </div>
+                        </form>
+                        </div>
+
+                        <!-- <div class="modal fade" th:id = "'supprimer-'+ ${element.id}" tabindex="-1">
+                          <form action="/travauxs/delete" method="post" class="row g-3">
+                            <input type="hidden" th:value ="${element.id}" name="id">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" th:text="'Suppression du travaux N° ' + ${element.id}"></h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  Voulez vous vraiment Supprimer ?
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-outline-danger">Supprimer</button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div> -->
+                      </tr>
+
+                      </tbody>
+                    </table>
+                    </div>
+
+                    <nav aria-label="Page navigation"  th:if="${#lists.size(travauxs) > 0}">
+                      <ul class="pagination">
+                          <li class="page-item" th:if="${currentPage > 0}">
+                              <a class="page-link" th:href="@{travauxs(page=0, sortBy=${sortBy}, direction=${direction})}">First</a>
+                          </li>
+                          <li class="page-item" th:if="${currentPage > 0}">
+                              <a class="page-link" th:href="@{travauxs(page=${currentPage - 1}, sortBy=${sortBy}, direction=${direction})}">Previous</a>
+                          </li>
+                          <th:block th:with="maxPageLinks=2">
+                            <th:block th:with="startPage=${(currentPage - maxPageLinks < 0) ? 0 : (currentPage - maxPageLinks)}">
+                              <th:block th:with="endPage=${(currentPage + maxPageLinks > totalPages - 1) ? totalPages - 1 : (currentPage + maxPageLinks)}">
+                                <li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}" th:class="${currentPage == i} ? 'active'">
+                                  <a class="page-link" th:href="@{travauxs(page=${i}, sortBy=${sortBy}, direction=${direction})}" th:text="${i} + 1"></a>
+                                </li>
+                              </th:block>
+                            </th:block>
+                          </th:block>
+                          <li class="page-item" th:if="${currentPage < totalPages - 1}">
+                              <a class="page-link" th:href="@{travauxs(page=${currentPage + 1}, sortBy=${sortBy}, direction=${direction})}">Next</a>
+                          </li>
+                          <li class="page-item" th:if="${currentPage < totalPages - 1}">
+                              <a class="page-link" th:href="@{travauxs(page=${totalPages - 1}, sortBy=${sortBy}, direction=${direction})}">Last</a>
+                          </li>
+                      </ul>
+                    </nav>
+      
+                  </div>
+                </div>
+      
+              </div>
+            </div>
+          </section>
+    </main>
+    
+    
+</body>
+</html>

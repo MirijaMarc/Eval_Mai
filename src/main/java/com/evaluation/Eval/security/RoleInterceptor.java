@@ -14,16 +14,16 @@ public class RoleInterceptor implements HandlerInterceptor{
             throws Exception {
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
-            if (handlerMethod.getMethod().getAnnotation(NoSession.class) != null) {
-                System.out.println("Method No session");
-                return true;
-            }
+            // if (handlerMethod.getMethod().getAnnotation(NoSession.class) != null) {
+            //     System.out.println("Method No session");
+            //     return true;
+            // }
             Role roleAnnotation = handlerMethod.getMethod().getAnnotation(Role.class);
             if (roleAnnotation != null) {
                 String[] allowedRoles = roleAnnotation.value();
                 if (!isUserLoggedIn(request)){
                     System.out.println("No user Redirection to Login");
-                    response.sendRedirect("/user/login");
+                    response.sendRedirect("/user/login-user");
                     return false;
                 }
                 String userRole = getUserRole(request);

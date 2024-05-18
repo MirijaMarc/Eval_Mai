@@ -6,7 +6,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>E-travel</title>
-  <link rel="icon" th:href="@{/img/travel.svg}" type="image/svg+xml">
+  <link rel="icon" th:href="@{/img/logo2.png}" type="image/svg+xml">
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -14,8 +14,8 @@
   <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <!-- <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet"> -->
 
   <!-- Vendor CSS Files -->
   <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
@@ -28,8 +28,9 @@
 
   <!-- Template Main CSS File -->
   <link th:href="@{/css/style.css}" rel="stylesheet">
+  <link th:href="@{/css/toastify.min.css}" rel="stylesheet">
   
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"> -->
 
 </head>
 <body>
@@ -39,8 +40,8 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a th:href="@{index.html}" class="logo d-flex align-items-center">
-        <img th:src="@{/img/travel.svg}" alt="">
-        <span class="d-none d-lg-block">Eval</span>
+        <img th:src="@{/img/construction.svg}" alt="">
+        <span class="d-none d-lg-block">Construct IT</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
 
@@ -57,7 +58,7 @@
           <a th:if="${isLoged == true}" class="btn btn-outline-danger d-flex align-items-center" href="/user/logout">
             Se déconnecter
           </a>
-          <a th:if="${isLoged == false}" class="btn btn-outline-primary d-flex align-items-center" href="/user/login">
+          <a th:if="${isLoged == false}" class="btn btn-outline-primary d-flex align-items-center" href="/user/login-user">
             Se connecter
           </a>
         </li>
@@ -73,37 +74,74 @@
     <ul class="sidebar-nav" id="sidebar-nav">
         
         <li class="nav-heading">Pages</li>
-        <li class="nav-heading"><a type="button" data-bs-toggle="modal" data-bs-target= "#import" class="btn btn-light">Import CSV</a></li>
+        <!-- <li class="nav-heading"><a type="button" data-bs-toggle="modal" data-bs-target= "#import" class="btn btn-light disabled">Import CSV</a></li> -->
+        <li class="nav-heading" th:if="${#strings.equalsIgnoreCase('btp', role)}"><a type="button" data-bs-toggle="modal" data-bs-target= "#clean" class="btn btn-light">Clean Database</a></li>
 
         
         
-        <li class="nav-item">
+        <li class="nav-item" th:if="${#strings.equalsIgnoreCase('client', role)}">
           <a class="nav-link collapsed" data-bs-target="#classe-nav" data-bs-toggle="collapse" th:href="@{#}">
             <i class="bi bi-menu-button-wide"></i><span>Utilitaires</span><i class="bi bi-chevron-down ms-auto"></i>
           </a>
           <ul id="classe-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <li>
-              <a th:href="@{/pages/ecurie}">
-                <i class="bi bi-circle"></i><span>Ecurie</span>
+              <a th:href="@{/client}">
+                <i class="bi bi-circle"></i><span>Devis</span>
               </a>
             </li>
             <li>
-              <a th:href="@{/pages/pilote}">
-                <i class="bi bi-circle"></i><span>Pilote</span>
+              <a th:href="@{/client/new-Devis}">
+                <i class="bi bi-circle"></i><span>Nouveau Devis</span>
               </a>
             </li>
-            <li>
-              <a th:href="@{/pages/classement}">
-                <i class="bi bi-circle"></i><span>Grand Prix</span>
-              </a>
-            </li> 
           </ul>
         </li><!-- End Components Nav -->
 
-        <li class="nav-item">
-          <a class="nav-link collapsed" th:href="@{/pages/classement}">
-            <i class="bi bi-menu-button-wide"></i><span>Classement</span>
+        <li class="nav-item" th:if="${#strings.equalsIgnoreCase('btp', role)}">
+
+          
+          <a class="nav-link collapsed" data-bs-target="#classe-nav2" data-bs-toggle="collapse" th:href="@{#}">
+            <i class="bi bi-menu-button-wide"></i><span>Importations</span><i class="bi bi-chevron-down ms-auto"></i>
           </a>
+          <ul id="classe-nav2" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+              <a th:href="@{/admin/importation}">
+                <i class="bi bi-circle"></i><span>Import</span>
+              </a>
+            </li>
+          </ul>
+
+          <a class="nav-link collapsed" data-bs-target="#classe-nav" data-bs-toggle="collapse" th:href="@{#}">
+            <i class="bi bi-menu-button-wide"></i><span>Utilitaires</span><i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul id="classe-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+              <a th:href="@{/admin/dashboard}">
+                <i class="bi bi-circle"></i><span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a th:href="@{/admin/devis}">
+                <i class="bi bi-circle"></i><span>Liste Devis</span>
+              </a>
+            </li>
+          </ul>
+
+          <a class="nav-link collapsed" data-bs-target="#classe-nav3" data-bs-toggle="collapse" th:href="@{#}">
+            <i class="bi bi-menu-button-wide"></i><span>CRUD</span><i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul id="classe-nav3" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+              <a th:href="@{/travauxs}">
+                <i class="bi bi-circle"></i><span>Type Travaux</span>
+              </a>
+            </li>
+            <li>
+              <a th:href="@{/finitions}">
+                <i class="bi bi-circle"></i><span>Type Finition</span>
+              </a>
+            </li>
+          </ul>
         </li><!-- End Components Nav -->
 
     </ul>
@@ -124,12 +162,32 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-warning">Modifier</button>
+                    <button type="submit" class="btn btn-outline-warning">Importer</button>
                 </div>
             </div>
         </div>
     </form>
-</div>
+  </div>
+
+  <div class="modal fade" id = "clean" tabindex="-1">
+    <form action="/clean" method="post" class="row g-3">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Nettoyage de la base de données</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Voulez vous vraiment nettoyer la base ?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-outline-danger">Supprimer</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
   
   
 <main id="main" class="main" layout:fragment="main">
@@ -169,12 +227,15 @@
   <!-- Js Mirija -->
   <script th:src="@{/js/numeric.min.js}"></script>
   <script th:src="@{/js/script.js}"></script>
+  <script th:src="@{/js/toastify.min.js}"></script>
+  <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+  <script th:src="@{/js/validation.js}"></script>
 
 
   <!-- Html to pdf js -->
 
 
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script> -->
   <script th:if="${error}" th:inline="javascript">
         Toastify({
         text: /*[[${error}]]*/'',

@@ -53,13 +53,9 @@ Modal:
 
 Controlle de valeur String:
     public void setNom(String n)throws Exception{
-        if (n == null){
-            System.out.println("Null izy ato");
-            throw new Exception("Nom pilote invalide"); 
-        }else{
-            if (n.trim() == "") throw new Exception("Nom pilote invalide");
-            nom = n;
-        }
+        if (n == null) throw new Exception("Nom pilote invalide"); 
+        if (n.trim() == "") throw new Exception("Nom pilote invalide");
+        this.client = n;
     }
 
 
@@ -68,7 +64,46 @@ Redirect erreur:
     mv.addObject("error", e.getMessage());
     return mv;
 
+-----------------------------------------------------------------------------------------------------------------------------------
+CSV control de valeur:
+public void setNom(String n)throws Exception{
+    if (n == null){
+        System.out.println("Null izy ato");
+        throw new Exception("Nom pilote invalide"); 
+    }else{
+        if (n.trim() == "") throw new Exception("Nom pilote invalide");
+        this.nom = n;
+    }
+}
 
+public void setDatenaissance(String dateNaissance) throws Exception{
+    try {
+        LocalDate d = LocalDate.parse(dateNaissance, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        System.err.println("zoky Tojo "+ dateNaissance);
+    } catch (Exception e) {
+        throw new Exception("Date "+ dateNaissance + " invalide");
+    }
+    this.datenaissance = dateNaissance;
+
+}
+
+public void setTemps(String temps)throws Exception {
+    try {
+        LocalTime t = LocalTime.parse(temps);
+    } catch (Exception e) {
+        throw new Exception("Temps "+temps + " invalide");
+    }
+    this.temps = temps;
+}
+
+public void setNum_seance(String num_seance) throws Exception{
+    try {
+        Integer.parseInt(num_seance);
+    } catch (Exception e) {
+        throw new Exception("Nombre "+ num_seance + " invalide");
+    }
+    this.num_seance = num_seance;
+}
 
 
 

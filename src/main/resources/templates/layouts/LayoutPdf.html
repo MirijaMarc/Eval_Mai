@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8"></meta>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
+
+  <title>E-travel</title>
+  <link rel="icon" th:href="@{classpath:/static/img/travel.svg}" type="image/svg+xml"></link>
+  <meta content="" name="description"></meta>
+  <meta content="" name="keywords"></meta>
+
+  <!-- Favicons -->
+  <link th:href="@{classpath:/static/img/apple-touch-icon.png}" rel="apple-touch-icon"></link>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect"></link>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet"></link> 
+
+  <!-- Vendor CSS Files -->
+  <link th:href="@{classpath:/static/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet"></link>
+  <link th:href="@{classpath:/static/vendor/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet"></link>
+  <link th:href="@{classpath:/static/vendor/boxicons/css/boxicons.min.css}" rel="stylesheet"></link>
+  <link th:href="@{classpath:/static/vendor/quill/quill.snow.css}" rel="stylesheet"></link>
+  <link th:href="@{classpath:/static/vendor/quill/quill.bubble.css}" rel="stylesheet"></link>
+  <link th:href="@{classpath:/static/vendor/remixicon/remixicon.css}" rel="stylesheet"></link>
+  <link th:href="@{classpath:/static/vendor/simple-datatables/style.css}" rel="stylesheet"></link>
+
+  <!-- Template Main CSS File -->
+  <link th:href="@{classpath:/static/css/style.css}" rel="stylesheet"></link>
+  
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"></link>
+
+</head>
+<body>
+
+  
+  
+<main layout:fragment="main">
+
+</main><!-- End #main -->
+
+
+  <!-- Vendor JS Files -->
+  <script th:src="@{classpath:/static/vendor/apexcharts/apexcharts.min.js}"></script>
+  <script th:src="@{classpath:/static/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{classpath:/static/vendor/chart.js/chart.umd.js}"></script>
+  <script th:src="@{classpath:/static/vendor/echarts/echarts.min.js}"></script>
+  <script th:src="@{classpath:/static/vendor/quill/quill.min.js}"></script>
+  <script th:src="@{classpath:/static/vendor/simple-datatables/simple-datatables.js}"></script>
+  <script th:src="@{classpath:/static/vendor/tinymce/tinymce.min.js}"></script>
+  <script th:src="@{classpath:/static/vendor/php-email-form/validate.js}"></script>
+
+  <!-- Template Main JS File -->
+  <script th:src="@{classpath:/static/js/main.js}"></script>
+
+  <!-- Js Mirija -->
+  <script th:src="@{classpath:/static/js/numeric.min.js}"></script>
+  <script th:src="@{classpath:/static/js/script.js}"></script>
+
+
+  <!-- Html to pdf js -->
+
+
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script th:if="${error}" th:inline="javascript">
+        Toastify({
+        text: /*[[${error}]]*/'',
+
+        duration: 10000,
+        close: true,
+        style: {
+            background: "#dc3545",
+        }
+
+        }).showToast();
+  </script>
+
+
+
+</body>
+
+</html>

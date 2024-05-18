@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html
+    layout:decorate="~{layouts/layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}"></title>
+</head>
+<body>
+    <main id="main" class="main" layout:fragment="main">
+        <section class="section">
+
+
+            <div class="row">
+              <div class="col-lg-12">
+      
+                <div id="elementPDF" class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Liste Deviss</h5>
+                        <form action="/deviss" method="get" class="mb-3">
+                            <div class="row align-items-center">
+                              <div class="col-2">
+                                <select class="form-select" name="sortBy">
+                                    <option value="id_devis" th:selected="${ sortBy == 'id_devis'}">id</option>
+
+<option value="numero_devis" th:selected="${ sortBy == 'numero_devis'}">numero</option>
+
+<option value="idmaison" th:selected="${ sortBy == 'idmaison'}">maison</option>
+
+<option value="idfinition" th:selected="${ sortBy == 'idfinition'}">finition</option>
+
+<option value="iduser" th:selected="${ sortBy == 'iduser'}">utilisateur</option>
+
+<option value="montant" th:selected="${ sortBy == 'montant'}">montantTotal</option>
+
+<option value="finition" th:selected="${ sortBy == 'finition'}">finitionPourcentage</option>
+
+<option value="duree" th:selected="${ sortBy == 'duree'}">dureeTravaux</option>
+
+<option value="date_devis" th:selected="${ sortBy == 'date_devis'}">date</option>
+
+<option value="date_debut_travaux" th:selected="${ sortBy == 'date_debut_travaux'}">dateDebutTravaux</option>
+
+
+
+                                </select>
+                              </div>
+                              <div class="form-check col-2" style="width: 6%;">
+                                <input class="form-check-input" type="radio" name="direction" value="asc" id="flexRadioDefault1" th:checked="${ direction == 'asc'}">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                  ASC
+                                </label>
+                              </div>
+                                <div class="form-check col-2" style="width: 6%;">
+                                  <input class="form-check-input" type="radio" name="direction" value="desc" id="flexRadioDefault2" th:checked="${ direction == 'desc'}">
+                                  <label class="form-check-label" for="flexRadioDefault2">
+                                    DESC
+                                  </label>
+                                </div>
+                              <div class="col">
+                                <button type="submit" class="btn btn-outline-primary">Trier</button>
+                              </div>
+                            </div>
+                        </form>
+                        <form action="/deviss" method="get" class="mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-4">
+                              <input type="text" class="form-control" th:if="${search != null}" th:value="${search}" name="search" placeholder="rechercher">
+                              <input type="text" class="form-control" th:unless="${search != null}" name="search" placeholder="rechercher">
+                            </div>
+                            <div class="col">
+                              <button type="submit" class="btn btn-outline-primary">Search</button>
+                            </div>
+                          </div>
+                        </form>
+                        <form action="/deviss" method="get" class="mb-3">
+                          <div class="row">
+                              <div class="col">
+                                <div class="accordion col" id="accordionFlushExample">
+                                  <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingOne">
+                                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        Recherche Muticritère
+                                      </button>
+                                    </h2>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                                    </div>
+                                  </div>
+                                </div><!-- End Accordion without outline borders -->
+                              </div>
+                              <div class="col"></div> 
+                          </div>
+                        </form>
+                    <div style="overflow-x:auto;">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>id</th>
+                          <th>Type Maison et Finition</th>
+                          <th>Montant Total</th>
+                          <th>Reste à payer</th>
+                          <th>Date Début Travaux</th>
+                          <th>Date Fin travaux</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each=" element : ${deviss}">
+                          <td th:text="${element.id}"></td>
+
+
+<td th:text="${element.maison.nom + ' avec finition '+ element.finition.nom}"></td>
+
+
+
+<td class="colNumber" th:text="${element.montantTotal}"></td>
+
+<td th:text="${element.montantTotal}"></td>
+
+<td class="colDate" th:text="${element.dateDebutTravaux}"></td>
+
+<td class="colDate" th:text="${element.dateDebutTravaux}"></td>
+
+<td th:text="${element.etat}"></td>
+
+
+
+                          <td>
+                            <a data-bs-toggle="modal" th:data-bs-target= "'#modifier-' + ${element.id}" type="button" class="btn btn-outline-primary btn-sm">Payer</a>
+                            <a data-bs-toggle="modal" th:data-bs-target= "'#supprimer-' + ${element.id}" type="button" class="btn btn btn-outline-danger btn-sm">Exporter</a>                            
+                          </td>
+
+                        <div class="modal fade" th:id = "'supprimer-'+ ${element.id}" tabindex="-1">
+                          <form action="/deviss/delete" method="post" class="row g-3">
+                            <input type="hidden" th:value ="${element.id}" name="id">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" th:text="'Suppression du devis N° ' + ${element.id}"></h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  Voulez vous vraiment Supprimer ?
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-outline-danger">Supprimer</button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </tr>
+
+                      </tbody>
+                    </table>
+                    </div>
+
+                    <nav aria-label="Page navigation"  th:if="${#lists.size(deviss) > 0}">
+                      <ul class="pagination">
+                          <li class="page-item" th:if="${currentPage > 0}">
+                              <a class="page-link" th:href="@{deviss(page=0, sortBy=${sortBy}, direction=${direction})}">First</a>
+                          </li>
+                          <li class="page-item" th:if="${currentPage > 0}">
+                              <a class="page-link" th:href="@{deviss(page=${currentPage - 1}, sortBy=${sortBy}, direction=${direction})}">Previous</a>
+                          </li>
+                          <th:block th:with="maxPageLinks=2">
+                            <th:block th:with="startPage=${(currentPage - maxPageLinks < 0) ? 0 : (currentPage - maxPageLinks)}">
+                              <th:block th:with="endPage=${(currentPage + maxPageLinks > totalPages - 1) ? totalPages - 1 : (currentPage + maxPageLinks)}">
+                                <li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}" th:class="${currentPage == i} ? 'active'">
+                                  <a class="page-link" th:href="@{deviss(page=${i}, sortBy=${sortBy}, direction=${direction})}" th:text="${i} + 1"></a>
+                                </li>
+                              </th:block>
+                            </th:block>
+                          </th:block>
+                          <li class="page-item" th:if="${currentPage < totalPages - 1}">
+                              <a class="page-link" th:href="@{deviss(page=${currentPage + 1}, sortBy=${sortBy}, direction=${direction})}">Next</a>
+                          </li>
+                          <li class="page-item" th:if="${currentPage < totalPages - 1}">
+                              <a class="page-link" th:href="@{deviss(page=${totalPages - 1}, sortBy=${sortBy}, direction=${direction})}">Last</a>
+                          </li>
+                      </ul>
+                    </nav>
+      
+                  </div>
+                </div>
+      
+              </div>
+            </div>
+          </section>
+    </main>
+    
+    
+</body>
+</html>

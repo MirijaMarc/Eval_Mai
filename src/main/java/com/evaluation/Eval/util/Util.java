@@ -11,24 +11,118 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
-
-
 import com.opencsv.CSVReader;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.Table;
 import jakarta.servlet.http.HttpServletRequest;
 
 
 public class Util {
 
-    public static String CSV_PATH = "E:/Mirija/ITU/S6/evaluation/Eval/csv";
 
+    private static final List<String> DATE_FORMATS = Arrays.asList(
+        "d/M/yyyy", "dd/MM/yyyy", "M/d/yyyy", "MM/dd/yyyy", "yyyy-MM-dd", "dd-MM-yyyy"
+    );
 
+     public static boolean isValidDate(String dateStr) {
+        for (String format : DATE_FORMATS) {
+            if (isValidFormat(dateStr, format)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isValidFormat(String dateStr, String format) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(format);
+        try {
+            LocalDate.parse(dateStr, dateFormatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+  
+    public static boolean hasError(ArrayList<Erreur> errors){
+        for (Erreur erreur : errors) {
+            if (erreur.getErreur() != "") return true;
+        }
+        return false;
+    }
+
+    public static String createRequeteMultiMot(Class classe, String mot){
+        StringBuilder builder = new StringBuilder();
+        String[] mots = mot.split("\\s+"); 
+        Table table = (Table) classe.getAnnotation(Table.class);
+        String nomTable = table.name();
+        String select = "SELECT * FROM "+ nomTable + " WHERE ";
+        builder.append(select);
+        Column column= null;
+        int j= 0;
+        for (Field field : classe.getDeclaredFields()) {
+            String where = "";
+            if (field.getName() != "etat"){
+                column = field.getAnnotation(Column.class);
+                String nomColonne = column.name();
+                String like = " CAST(col as VARCHAR) ILIKE '%mot%' ".replace("col", nomColonne);
+                for (int i = 0; i<mots.length; i++) {
+                    where += like.replace("mot", mots[i]);
+                    if (i < mots.length-1){
+                        where += "AND";
+                    }
+                }
+                if (j < classe.getDeclaredFields().length -2){
+                    where+= "OR";
+                }
+            }
+            j++;
+            builder.append(where);
+        }
+        builder.append(" UNION ");
+        for (int i = 0; i<mots.length; i++) {
+            select = "SELECT * from " + nomTable + " WHERE ";
+            builder.append(select);
+            j= 0;
+            for (Field field : classe.getDeclaredFields()) {
+                String where = "";
+                if (field.getName() != "etat"){
+                    column = field.getAnnotation(Column.class);
+                    String nomColonne = column.name();
+                    String like = " CAST(col as VARCHAR) ILIKE '%mot%' ".replace("col", nomColonne).replace("mot", mots[i]);
+                    // System.out.println(like);
+                    where+=like;
+                    if (j < classe.getDeclaredFields().length -2){
+                        where+= "OR";
+                    }
+                }
+                j++;
+                builder.append(where);
+            }
+            if (i < mots.length -1){
+                builder.append(" UNION ");
+            }
+
+        }
+        return builder.toString();
+    }
+    
+    public static String uploadFile(MultipartFile file)throws Exception{
+        String newFileName = UUID.randomUUID().toString() +"-"+ file.getOriginalFilename();
+        file.transferTo(new File(Constante.UPLOAD_PATH, newFileName));
+        return newFileName;
+
+    }
 
     public static boolean isLoged(HttpServletRequest request){
         return request.getSession().getAttribute("user") != null;
@@ -144,6 +238,8 @@ public class Util {
         }
         return (T) obj;
     }
+
+
 
     
 }

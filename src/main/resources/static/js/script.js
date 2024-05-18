@@ -26,5 +26,6 @@ colDates.forEach(element => {
 
 const colNumber = document.querySelectorAll(".colNumber");
 colNumber.forEach(element => {
+    console.log("hello");
     element.innerHTML = formatNumber(element.textContent)
 });

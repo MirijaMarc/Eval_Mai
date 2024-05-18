@@ -1,7 +1,5 @@
 -- Données CSV
 
-
-
 -- Insertion des données dans la table "pilote"
 INSERT INTO pilotes (nom_pilote, date_naissance)
 VALUES
@@ -19,7 +17,7 @@ VALUES
 ( 'Sebastian Vettel', '1987-07-03'),
 ( 'Lance Stroll', '1998-10-29'),
 ( 'Yuki Tsunoda', '2000-05-11'),
-( 'Kimi Räikkönen', '1979-10-17'),
+( 'Kimi Raikkonén', '1979-10-17'),
 ( 'Antonio Giovinazzi', '1993-12-14'),
 ( 'Mick Schumacher', '1999-03-22'),
 ( 'Nikita Mazepin', '1999-03-02'),
@@ -226,3 +224,15 @@ SELECT gp.id_grand_prix, p.id_pilote, CAST(temps as TIME ), CAST(dategrandprix a
 JOIN pilotes p ON p.nom_pilote = c.nom AND p.date_naissance = CAST(c.datenaissance as date)
 JOIN grand_prixs gp ON gp.nom_grand_prix = c.grandprix;
 
+
+SELECT * FROM pilotes WHERE  CAST(id_pilote as VARCHAR) ILIKE '%Lewis%' AND CAST(id_pilote as VARCHAR) ILIKE '%Hamilton%'
+                         OR CAST(nom_pilote as VARCHAR) ILIKE '%Lewis%' AND CAST(nom_pilote as VARCHAR) ILIKE '%Hamilton%'
+                          OR CAST(date_naissance as VARCHAR) ILIKE '%Lewis%' AND CAST(date_naissance as VARCHAR) ILIKE '%Hamilton%'
+UNION
+SELECT * from pilotes WHERE  CAST(id_pilote as VARCHAR) ILIKE '%Lewis%' 
+                            OR CAST(nom_pilote as VARCHAR) ILIKE '%Lewis%' 
+                            OR CAST(date_naissance as VARCHAR) ILIKE '%Lewis%'  
+UNION 
+SELECT * from pilotes WHERE  CAST(id_pilote as VARCHAR) ILIKE '%Hamilton%' 
+OR CAST(nom_pilote as VARCHAR) ILIKE '%Hamilton%' 
+OR CAST(date_naissance as VARCHAR) ILIKE '%Hamilton%';

@@ -20,8 +20,13 @@ public interface UserRepository extends JpaRepository<Utilisateur, Integer> {
 
 
     @Query(nativeQuery = true, value ="""
-            SELECT * FROM users where email= :email and password=:password and etat_user =0 
+            SELECT * FROM users where email= :email and password=:password and etat_user =0 LIMIT 1
             """)
     Optional<Utilisateur> findByEmailAndPassword(String email, String password);
+
+    @Query(nativeQuery = true, value ="""
+            SELECT * FROM users where numero =:numero LIMIT 1
+            """)
+    Optional<Utilisateur> findByNumero(String numero);
 
 }

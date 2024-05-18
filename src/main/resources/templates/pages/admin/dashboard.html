@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <main id="main" class="main" layout:fragment="main">
+        <div class="row">
+            <div class="col-3">
+                <!-- Default Card -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mt-3 d-flex" style="gap: 10px;">
+                            <h4 class="text-success fw-bolder">Montant Total</h4>
+                        </div>
+                    <p class="fs-3" th:text="${#numbers.formatDecimal(montantTotal, 1, 'COMMA', 2, 'POINT') + ' Ar'}"</p>
+                    </div>
+                </div><!-- End Default Card -->
+            </div>
+
+            <div class="col-4">
+              <!-- Default Card -->
+              <div class="card">
+                  <div class="card-body">
+                      <div class="mt-3 d-flex" style="gap: 10px;">
+                          <h4 class="text-warning fw-bolder">Montant Total Effectué</h4>
+                      </div>
+                  <p class="fs-3" th:text="${#numbers.formatDecimal(montantTotalEffectue, 1, 'COMMA', 2, 'POINT') + ' Ar'}"</p>
+                  </div>
+              </div><!-- End Default Card -->
+          </div>
+
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <form action="/admin/dashboard" method="get">
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <select class="form-select" name="annee">
+                                <option th:each="i : ${#numbers.sequence(2024, 2000)}" th:value="${i}" th:text="${i}" th:selected="${ annee == i.toString()}"></option>
+                            </select>
+                        </div>
+                    
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary">Trier</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-10 mt-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Histogramme des devis</h5>
+  
+                <!-- Bar Chart -->
+                <canvas id="barChart" style="max-height: 400px;"></canvas>
+                <script th:inline="javascript">
+                    let dicoMois = {
+                        1:"Janvier",
+                        2:"Février",
+                        3:"Mars",
+                        4:"Avril",
+                        5:"Mai",
+                        6:"Juin",
+                        7:"Juillet",
+                        8:"Août",
+                        9:"Septembre",
+                        10:"Octobre",
+                        11:"Novembre",
+                        12: "Décembre"
+                    }
+                  document.addEventListener("DOMContentLoaded", () => {
+                    let data =/*[[${v_dashboard}]]*/''
+                    let mois =[]
+                    let montants = []
+                    console.log(data);
+                    data.forEach((element,index = 1) => {
+                        let key = index + 1
+                        mois.push(dicoMois[key.toString()])
+                        montants.push(element.total)
+                    });
+                    console.log(montants);
+
+                    new Chart(document.querySelector('#barChart'), {
+                      type: 'bar',
+                      data: {
+                        labels: mois,
+                        datasets: [{
+                          label: 'Bar Chart',
+                          data: montants,
+                          backgroundColor: [
+                            'blue',
+                            'blue',
+                            'blue',
+                            'blue',
+                            'blue',
+                            'blue',
+                            'blue',
+                            'blue',
+                            'blue',
+                            'blue'
+                            
+                          ],
+                          borderColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)',
+                            'rgb(201, 203, 207)',
+                            'rgb(201, 203, 207)',
+                            'rgb(201, 203, 207)'
+                          ],
+                          borderWidth: 1
+                        }]
+                      },
+                      options: {
+                        scales: {
+                          y: {
+                            beginAtZero: true
+                          }
+                        }
+                      }
+                    });
+                  });
+                </script>
+                <!-- End Bar CHart -->
+  
+              </div>
+            </div>
+          </div>
+    </main>
+</body>
+</html>

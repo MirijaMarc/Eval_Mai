@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html
+    layout:decorate="~{layouts/layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}"></title>
+</head>
+<body>
+    <main id="main" class="main" layout:fragment="main">
+        <section class="section">
+
+            <div class="row">
+                <!-- Card with header and footer -->
+                <div class="card">
+                    <div class="card-header">Détails</div>
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${'Devis Numero '+ devis.reference}"></h5>
+                        
+                        <!-- List group with active and disabled items -->
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Client: </strong><span th:text="${devis.utilisateur.numero}"></span></li>
+                            <li class="list-group-item"><strong>Date Début travaux: </strong><span th:text="${#temporals.format(devis.dateDebutTravaux, 'dd MMMM yyyy')}"></span></li>
+                            <li class="list-group-item"><strong>Date Fin travaux: </strong><span th:text="${#temporals.format(devis.getDateFinTravaux(), 'dd MMMM yyyy')}"></span></li>
+                            <li class="list-group-item"><strong>Durée: </strong><span th:text="${devis.dureeTravaux + ' jours'}"></span></li>
+                            <li class="list-group-item"><strong>MontantTotal: </strong><span th:text="${#numbers.formatDecimal( devis.montantTotal, 0, 'COMMA', 2, 'POINT') + ' Ar'}"></span></li>
+                            <li class="list-group-item"><strong>Finition: </strong><span th:text="${devis.finition.nom + ' , '+ devis.finitionPourcentage + '%'}"></span></li>
+                        </ul><!-- End Clean list group -->
+                    </div>
+                </div><!-- End Card with header and footer -->
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <div id="elementPDF" class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Liste des Travaux</h5>
+                    <div style="overflow-x:auto;">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>Code</th>
+                            <th>Nom travaux</th>
+                            <th>Unité</th>
+                            <th>Quantité</th>
+                            <th>Prix Unitaire</th>
+                            <th>Montant Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each=" element : ${travaux}">
+                          <td th:text="${element.id}"></td>
+                          <td th:text="${element.travaux.code}"></td>
+                          <td th:text="${element.travaux.nom}"></td>
+                          <td th:text="${element.travaux.unite.nom}"></td>
+                          <td th:text="${element.quantite}"></td>
+                          <td th:text="${#numbers.formatDecimal(element.prixUnitaire, 1, 'COMMA', 2, 'POINT') + ' Ar'}"></td>
+                          <td th:text="${#numbers.formatDecimal(element.prixUnitaire * element.quantite, 1, 'COMMA', 2, 'POINT') + ' Ar'}"></td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+                    </div>
+
+                    <nav aria-label="Page navigation"  th:if="${#lists.size(travaux) > 0}">
+                      <ul class="pagination">
+                          <li class="page-item" th:if="${currentPage > 0}">
+                              <a class="page-link" th:href="@{details(page=0, sortBy=${sortBy}, direction=${direction}, iddevis=${iddevis})}">First</a>
+                          </li>
+                          <li class="page-item" th:if="${currentPage > 0}">
+                              <a class="page-link" th:href="@{details(page=${currentPage - 1}, sortBy=${sortBy}, direction=${direction}, iddevis=${iddevis})}">Previous</a>
+                          </li>
+                          <th:block th:with="maxPageLinks=2">
+                            <th:block th:with="startPage=${(currentPage - maxPageLinks < 0) ? 0 : (currentPage - maxPageLinks)}">
+                              <th:block th:with="endPage=${(currentPage + maxPageLinks > totalPages - 1) ? totalPages - 1 : (currentPage + maxPageLinks)}">
+                                <li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}" th:class="${currentPage == i} ? 'active'">
+                                  <a class="page-link" th:href="@{details(page=${i}, sortBy=${sortBy}, direction=${direction}, iddevis=${iddevis})}" th:text="${i} + 1"></a>
+                                </li>
+                              </th:block>
+                            </th:block>
+                          </th:block>
+                          <li class="page-item" th:if="${currentPage < totalPages - 1}">
+                              <a class="page-link" th:href="@{details(page=${currentPage + 1}, sortBy=${sortBy}, direction=${direction}, iddevis=${iddevis})}">Next</a>
+                          </li>
+                          <li class="page-item" th:if="${currentPage < totalPages - 1}">
+                              <a class="page-link" th:href="@{details(page=${totalPages - 1}, sortBy=${sortBy}, direction=${direction},iddevis=${iddevis})}">Last</a>
+                          </li>
+                      </ul>
+                    </nav>
+      
+                  </div>
+                </div>
+      
+              </div>
+            </div>
+
+            
+          </section>
+    </main>
+    
+    
+</body>
+</html>

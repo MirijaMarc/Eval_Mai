@@ -9,6 +9,7 @@ import lombok.Data;
 public class Erreur {
     int ligne;
     String erreur = "";
+    String fichier;
 
 
 

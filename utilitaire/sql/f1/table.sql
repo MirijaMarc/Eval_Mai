@@ -16,7 +16,7 @@ CREATE TABLE pilotes (
 
 CREATE TABLE ecuries (
   id_ecurie SERIAL PRIMARY KEY,
-  nom_ecurie VARCHAR(255) NOT NULL,
+  nom_ecurie VARCHAR(255) NOT NULL UNIQUE,
   etat_ecurie INT DEFAULT 0 NOT NULL,
   CHECK (etat_ecurie = 0 OR etat_ecurie=-10)
 );
@@ -65,6 +65,16 @@ CREATE TABLE users(
   role INTEGER DEFAULT 1 NOT NULL,
   etat_user INT DEFAULT 0 NOT NULL,
   CHECK (etat_user = 0 OR etat_user = 10)
+);
+
+CREATE TABLE csv(
+    id SERIAL PRIMARY KEY NOT NULL,
+    nom VARCHAR(255) NOT NULL,
+    datenaissance VARCHAR(255) NOT NULL,
+    ecurie VARCHAR(255) NOT NULL,
+    grandprix VARCHAR(255) NOT NULL,
+    dateGrandPrix VARCHAR(255) NOT NULL,
+    temps VARCHAR(255) NOT NULL
 );
 
 

@@ -1,5 +1,8 @@
 package com.evaluation.Eval.entity;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,6 +24,8 @@ public class Utilisateur {
 
     private String email;
 
+    private String numero;
+
     private String password;
 
     private int role;
@@ -33,11 +38,11 @@ public class Utilisateur {
     public String getRole() {
         switch (role) {
             case 1:
-                return "USER";
+                return "Client";
             case 10:
-                return "ADMIN";
+                return "BTP";
             default:
-                return "USER";
+                return "Client";
         }
     }
 
@@ -49,6 +54,20 @@ public class Utilisateur {
 
     public void setRole(int i) {
         role = i;
+    }
+
+
+    public boolean isNumero(String numero){
+        if (numero !=null && numero.trim().isEmpty()){
+            String regex = "(0|[+]261)?(32|33|34|38)[0-9]{7}";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher= pattern.matcher(numero);
+            if (matcher.matches()){
+                return true;
+            }
+        } 
+        
+        return false;
     }
 
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html
+    layout:decorate="~{layouts/layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}"></title>
+</head>
+<body>
+    <main id="main" class="main" layout:fragment="main">
+        <section class="section">
+          <div class="row col-6">
+            <div class="card">
+                <div class="card-body">
+                <h5 class="card-title">Importations Données</h5>
+                <form action="/admin/import-donnee" method="post" class="row g-3" enctype="multipart/form-data">
+                        <div class="col-12">
+                            <label class="form-label">Maisons et Travaux</label>
+                            <input type="file" class="form-control" name="file1">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Devis</label>
+                            <input type="file" class="form-control" name="file2">
+                        </div>
+                    
+                        <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Insérer</button>
+                        <button type="reset" class="btn btn-secondary">Reset</button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- End Default Card -->
+          </div>
+
+            <hr>
+
+            <div class="row col-6">
+                <div class="card">
+                    <div class="card-body">
+                    <h5 class="card-title">Importations Paiements</h5>
+                    <form action="/admin/import-paiement" method="post" class="row g-3" enctype="multipart/form-data">
+                            <div class="col-12">
+                                <label class="form-label">Paiement</label>
+                                <input type="file" class="form-control" name="file">
+                            </div>
+                        
+                            <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Insérer</button>
+                            <button type="reset" class="btn btn-secondary">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- End Default Card -->
+              </div>
+        </section>
+    </main>
+    
+    
+</body>
+</html>
